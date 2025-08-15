@@ -2,16 +2,20 @@ workflows:
   ios_app_store:
     name: TopRoad • App Store
     max_build_duration: 120
+
+    # ⬇️ ВАЖНО: объявляем используемую интеграцию App Store Connect
+    integrations:
+      app_store_connect: "Mattie Navarro"
+
     environment:
       xcode: 15.4
       vars:
-        PROJECT_PATH: "TopRoad.xcodeproj"        # путь к твоему .xcodeproj
-        SCHEME: "TopRoad"                        # shared-схема
+        PROJECT_PATH: "TopRoad.xcodeproj"
+        SCHEME: "TopRoad"
         BUNDLE_ID: "com.navattomat.toproad"
-        APPLE_ID: "6751043815"                   # numeric Apple ID
+        APPLE_ID: "6751043815"       # numeric Apple ID
         EXPORT_METHOD: "app-store"
-      groups:
-        - "Mattie Navarro"                       # интеграция App Store Connect в Codemagic
+
     triggering:
       events:
         - push
@@ -20,10 +24,12 @@ workflows:
         - pattern: "main"
           include: true
           source: true
+
     cache:
       cache_paths:
         - "$HOME/Library/Caches/org.swift.swiftpm"
         - "$HOME/Library/Developer/Xcode/DerivedData"
+
     scripts:
       - name: Tools info
         script: |
@@ -31,10 +37,6 @@ workflows:
           swift --version
           echo "Project: $PROJECT_PATH"
           echo "Scheme : $SCHEME"
-
-      - name: Ensure shared scheme (tip)
-        script: |
-          echo "Make sure 'TopRoad' scheme is Shared and committed (Manage Schemes → Shared)."
 
       - name: Increment build number
         script: |
@@ -91,9 +93,9 @@ workflows:
 
     publishing:
       app_store_connect:
-        auth: integration                 # берёт ключ из группы "Mattie Navarro"
+        auth: integration              # использует integrations.app_store_connect
         submit_to_testflight: true
-        submit_to_app_store: false         # поставь false, если публикация в App Store пока не нужна
+        submit_to_app_store: false      # поставь false, если не хочешь автосабмит в App Store
       email:
         recipients:
           - "you@example.com"
