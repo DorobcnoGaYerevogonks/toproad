@@ -8,7 +8,7 @@ workflows:
       app_store_connect: "Mattie Navarro"
 
     environment:
-      xcode: 15.4
+      xcode: 16.0
       vars:
         PROJECT_PATH: "TopRoad.xcodeproj"
         SCHEME: "TopRoad"
