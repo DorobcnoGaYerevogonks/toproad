@@ -3,7 +3,6 @@ workflows:
     name: TopRoad • App Store
     max_build_duration: 120
 
-    # используем интеграцию App Store Connect по имени
     integrations:
       app_store_connect: "Mattie Navarro"
 
@@ -15,82 +14,69 @@ workflows:
         BUNDLE_ID: "com.navattomat.toproad"
         APPLE_ID: "6751043815"
         EXPORT_METHOD: "app-store"
-        DEVELOPMENT_TEAM: "88LASY7459"   # ← подставь свой Team ID (10 символов)
-      # кэш SPM
-    cache:
-      cache_paths:
-        - "$HOME/Library/Caches/org.swift.swiftpm"
-        - "$HOME/Library/Developer/Xcode/DerivedData"
-
-    triggering:
-      events:
-        - push
-        - pull_request
-      branch_patterns:
-        - pattern: "main"
-          include: true
-          source: true
+        DEVELOPMENT_TEAM: "88LASY7459"   # ← 10-символьный Team ID (не имя!)
 
     scripts:
       - name: Tools info
         script: |
           xcodebuild -version
           swift --version
-          echo "Team ID: $DEVELOPMENT_TEAM"
-          echo "BundleID: $BUNDLE_ID"
+          echo "Team: $DEVELOPMENT_TEAM"
 
-      - name: Resolve Swift Package Manager
-        script: |
-          xcodebuild -resolvePackageDependencies -project "$PROJECT_PATH" -scheme "$SCHEME"
-
-      # ⬇️ СКАЧИВАЕМ сертификаты/профили из App Store Connect и кладём в keychain
-      - name: Fetch signing files (App Store)
-        script: |
-          app-store-connect fetch-signing-files "$BUNDLE_ID" \
-            --type IOS_APP_STORE \
-            --create \
-            --team-id "$DEVELOPMENT_TEAM"
-          keychain add-certificates
-
-      # ⬇️ Применяем скачанные профили к текущему Xcode-проекту
-      - name: Use fetched provisioning profiles
-        script: |
-          xcode-project use-profiles
-
-      # ⬇️ Инкремент сборки (по желанию)
       - name: Increment build number
         script: |
           BUILD_NUMBER=${BUILD_NUMBER_OFFSET:-0}
           BUILD_NUMBER=$((BUILD_NUMBER + $CM_BUILD_ID))
           /usr/libexec/PlistBuddy -c "Set :CFBundleVersion $BUILD_NUMBER" "TopRoad/Info.plist" || true
-          echo "CFBundleVersion = $BUILD_NUMBER"
 
-      # ⬇️ Архив и экспорт IPA через удобную команду Codemagic (учитывает применённые профили)
-      - name: Build IPA (App Store)
+      - name: Resolve Swift Package Manager
         script: |
-          xcode-project build-ipa \
-            --project "$PROJECT_PATH" \
-            --scheme "$SCHEME" \
-            --archive-method "$EXPORT_METHOD" \
-            --team-id "$DEVELOPMENT_TEAM"
+          xcodebuild -resolvePackageDependencies -project "$PROJECT_PATH" -scheme "$SCHEME"
 
-      - name: List artifacts
+      - name: Archive (Release)
         script: |
-          ls -la build/ios/ipa || true
+          set -e
+          xcodebuild \
+            -project "$PROJECT_PATH" \
+            -scheme "$SCHEME" \
+            -configuration Release \
+            -destination "generic/platform=iOS" \
+            -archivePath "$CM_BUILD_DIR/TopRoad.xcarchive" \
+            clean archive \
+            CODE_SIGN_STYLE=Automatic \
+            DEVELOPMENT_TEAM="$DEVELOPMENT_TEAM" \
+            PRODUCT_BUNDLE_IDENTIFIER="$BUNDLE_ID" \
+            -allowProvisioningUpdates
+
+      - name: Export .ipa
+        script: |
+          set -e
+          cat > $CM_BUILD_DIR/ExportOptions.plist << EOF
+          <?xml version="1.0" encoding="UTF-8"?>
+          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+          <plist version="1.0">
+          <dict>
+            <key>method</key><string>${EXPORT_METHOD}</string>
+            <key>signingStyle</key><string>automatic</string>
+            <key>destination</key><string>export</string>
+            <key>uploadSymbols</key><true/>
+            <key>uploadBitcode</key><false/>
+          </dict>
+          </plist>
+          EOF
+          xcodebuild -exportArchive \
+            -archivePath "$CM_BUILD_DIR/TopRoad.xcarchive" \
+            -exportOptionsPlist "$CM_BUILD_DIR/ExportOptions.plist" \
+            -exportPath "$CM_BUILD_DIR/export" \
+            -allowProvisioningUpdates
 
     artifacts:
-      - "build/ios/ipa/*.ipa"
+      - "$CM_BUILD_DIR/export/*.ipa"
       - "$CM_BUILD_DIR/TopRoad.xcarchive"
-      - "$HOME/Library/Logs/DiagnosticReports/*.crash"
+      - "$CM_BUILD_DIR/ExportOptions.plist"
 
     publishing:
       app_store_connect:
-        auth: integration        # использует integrations.app_store_connect
+        auth: integration
         submit_to_testflight: true
         submit_to_app_store: true
-      email:
-        recipients:
-          - "you@example.com"
-        notify:
-          success: true
-          failure: true
