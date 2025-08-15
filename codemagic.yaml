@@ -5,13 +5,13 @@ workflows:
     environment:
       xcode: 15.4
       vars:
-        PROJECT_PATH: "TopRoad/TopRoad.xcodeproj"   # <-- проверь путь!
-        SCHEME: "TopRoad"
+        PROJECT_PATH: "TopRoad.xcodeproj"        # путь к твоему .xcodeproj
+        SCHEME: "TopRoad"                        # shared-схема
         BUNDLE_ID: "com.navattomat.toproad"
-        APPLE_ID: "6751043815"
+        APPLE_ID: "6751043815"                   # numeric Apple ID
         EXPORT_METHOD: "app-store"
       groups:
-        - "Mattie Navarro"
+        - "Mattie Navarro"                       # интеграция App Store Connect в Codemagic
     triggering:
       events:
         - push
@@ -25,12 +25,16 @@ workflows:
         - "$HOME/Library/Caches/org.swift.swiftpm"
         - "$HOME/Library/Developer/Xcode/DerivedData"
     scripts:
-      - name: Show tools
+      - name: Tools info
         script: |
           xcodebuild -version
           swift --version
           echo "Project: $PROJECT_PATH"
           echo "Scheme : $SCHEME"
+
+      - name: Ensure shared scheme (tip)
+        script: |
+          echo "Make sure 'TopRoad' scheme is Shared and committed (Manage Schemes → Shared)."
 
       - name: Increment build number
         script: |
@@ -77,7 +81,8 @@ workflows:
             -exportPath "$CM_BUILD_DIR/export"
 
       - name: List artifacts
-        script: ls -la "$CM_BUILD_DIR/export" || true
+        script: |
+          ls -la "$CM_BUILD_DIR/export" || true
 
     artifacts:
       - "$CM_BUILD_DIR/export/*.ipa"
@@ -86,9 +91,9 @@ workflows:
 
     publishing:
       app_store_connect:
-        auth: integration
+        auth: integration                 # берёт ключ из группы "Mattie Navarro"
         submit_to_testflight: true
-        submit_to_app_store: true
+        submit_to_app_store: false         # поставь false, если публикация в App Store пока не нужна
       email:
         recipients:
           - "you@example.com"
