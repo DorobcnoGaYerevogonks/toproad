@@ -1,0 +1,146 @@
+/* Tabs */
+"tab_trips" = "Trips";
+"tab_settings" = "Settings";
+"tab_stats" = "Statistics";
+
+/* Trips */
+"trips_title" = "Trips";
+"add_trip" = "Add Trip";
+"empty_title" = "Your travel calendar is empty";
+"empty_subtitle" = "Create your first trip to keep important dates in one place.";
+
+/* Fields */
+"field_title" = "Title";
+"field_location" = "Location";
+"field_start" = "Start Date";
+"field_end" = "End Date";
+"field_notes" = "Notes";
+"field_category" = "Category";
+"field_hidden" = "Mark as Hidden";
+
+/* Categories */
+"cat_vacation" = "Vacation";
+"cat_business" = "Business";
+"cat_weekend"  = "Weekend";
+"cat_event"    = "Event";
+"cat_other"    = "Other";
+"all_categories" = "All";
+"category_style_hint" = "Category color & bookmark";
+
+/* Checklist */
+"checklist_title" = "Checklist";
+"checklist_empty" = "No items yet. Add what you need to prepare.";
+"add_item" = "Add Item";
+"add_item_placeholder" = "e.g. Passport, charger...";
+"add_due_toggle" = "Set due date & time";
+"due_date" = "Due";
+"due_date_short" = "due";
+"clear_due" = "Clear";
+"initial_checklist" = "Initial Checklist";
+"initial_checklist_hint" = "You can add the first item right here (optional).";
+
+/* Daily notes */
+"daily_notes_title" = "Daily Notes";
+"daily_notes_open" = "Open Daily Notes";
+"daily_note_placeholder" = "Write a quick note for this day…";
+
+/* Hidden trips */
+"hidden_trip" = "Hidden Trip";
+"hidden_gate_title" = "This trip is hidden";
+"hidden_gate_desc" = "Unlock with your passcode to view and edit this trip.";
+"unlock_to_view" = "Unlock to view";
+"hidden_concealed" = "Hidden trips are concealed";
+"hidden_revealed" = "Hidden trips are visible";
+"lock_again" = "Lock again";
+
+/* Actions */
+"actions_title" = "Actions";
+"schedule_reminder" = "Schedule Trip Reminder";
+"copy_trip_info" = "Copy Trip Info";
+
+/* Share text */
+"share_title" = "Trip:";
+"share_location" = "Location:";
+"share_date_range" = "Dates:";
+"share_category" = "Category:";
+"share_notes" = "Notes:";
+"share_checklist" = "Checklist:";
+"share_daily_notes" = "Daily Notes:";
+
+/* Common actions */
+"save" = "Save";
+"cancel" = "Cancel";
+"reset" = "Reset";
+"add" = "Add";
+"ok" = "OK";
+"saved" = "Saved";
+"trip_details" = "Trip Details";
+
+/* Settings */
+"settings_title" = "Settings";
+"appearance" = "Appearance";
+"theme_title" = "Theme";
+"theme_system" = "System";
+"theme_light" = "Light";
+"theme_dark" = "Dark";
+
+"language_title" = "Language";
+"language_en" = "English";
+"language_es" = "Spanish";
+
+"notifications_title" = "Notifications";
+"notifications_allow" = "Allow Notifications";
+"notifications_status" = "Status";
+"notifications_enabled" = "Enabled";
+"notifications_disabled" = "Disabled";
+"notifications_unknown" = "Unknown";
+
+"privacy_security" = "Privacy & Security";
+"open_privacy_policy" = "Privacy Policy";
+"reset_all_data" = "Reset All Data";
+"reset_confirm_title" = "Reset All Data?";
+"reset_confirm_message" = "This will delete all trips and settings, including passcode. This action cannot be undone.";
+
+/* Notifications copy */
+"notif_trip_upcoming_title" = "Upcoming Trip";
+"notif_trip_upcoming_body" = "Don't forget: %@ starts soon!";
+"notif_check_title" = "Checklist Reminder";
+"notif_check_body" = "\"%@\" for \"%@\" is due";
+
+/* App Lock */
+"app_lock_title" = "App Lock";
+"app_lock_enable" = "Enable Passcode Lock";
+"app_lock_hint" = "When enabled, a 4-digit passcode is required when launching or returning to the app.";
+"set_passcode" = "Set / Change Passcode";
+"new_passcode" = "New 4-digit passcode";
+"confirm_passcode" = "Confirm passcode";
+"save_passcode" = "Save Passcode";
+"remove_passcode" = "Remove Passcode";
+
+"lock_screen_title" = "Enter Passcode";
+"enter_passcode" = "Passcode";
+"passcode_wrong" = "Incorrect passcode";
+"unlock" = "Unlock";
+
+/* About */
+"about_title" = "About";
+"version" = "Version";
+
+/* Stats */
+"stats_overview" = "Overview";
+"stats_total_trips" = "Total trips";
+"stats_upcoming_trips" = "Upcoming trips";
+"stats_completed_trips" = "Completed trips";
+"stats_checklist" = "Checklist";
+"stats_items_total" = "Items total";
+"stats_items_done" = "Completed";
+"stats_by_category" = "By Category";
+
+/* Countdown */
+"countdown_title" = "Countdown";
+"countdown_to_start" = "Starts in %02d:%02d:%02d:%02d";
+"countdown_to_end"   = "Ends in %02d:%02d:%02d:%02d";
+"countdown_finished" = "Trip finished";
+"countdown_hint_start" = "Counting down to the start date.";
+"countdown_hint_end"   = "Trip is in progress — countdown to the end date.";
+"countdown_hint_past"  = "Trip has ended.";

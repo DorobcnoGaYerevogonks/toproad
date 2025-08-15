@@ -1,0 +1,146 @@
+/* Tabs */
+"tab_trips" = "Viajes";
+"tab_settings" = "Ajustes";
+"tab_stats" = "Estadísticas";
+
+/* Trips */
+"trips_title" = "Viajes";
+"add_trip" = "Añadir viaje";
+"empty_title" = "Tu calendario de viajes está vacío";
+"empty_subtitle" = "Crea tu primer viaje para tener las fechas importantes en un solo lugar.";
+
+/* Fields */
+"field_title" = "Título";
+"field_location" = "Lugar";
+"field_start" = "Fecha de inicio";
+"field_end" = "Fecha de fin";
+"field_notes" = "Notas";
+"field_category" = "Categoría";
+"field_hidden" = "Marcar como oculto";
+
+/* Categories */
+"cat_vacation" = "Vacaciones";
+"cat_business" = "Negocios";
+"cat_weekend"  = "Fin de semana";
+"cat_event"    = "Evento";
+"cat_other"    = "Otro";
+"all_categories" = "Todas";
+"category_style_hint" = "Color y marcador de categoría";
+
+/* Checklist */
+"checklist_title" = "Lista de tareas";
+"checklist_empty" = "Aún no hay elementos. Añade lo que necesites preparar.";
+"add_item" = "Añadir elemento";
+"add_item_placeholder" = "p. ej., pasaporte, cargador…";
+"add_due_toggle" = "Definir fecha y hora";
+"due_date" = "Vence";
+"due_date_short" = "vence";
+"clear_due" = "Borrar";
+"initial_checklist" = "Lista inicial";
+"initial_checklist_hint" = "Puedes añadir el primer elemento aquí (opcional).";
+
+/* Daily notes */
+"daily_notes_title" = "Notas diarias";
+"daily_notes_open" = "Abrir notas diarias";
+"daily_note_placeholder" = "Escribe una nota rápida para este día…";
+
+/* Hidden trips */
+"hidden_trip" = "Viaje oculto";
+"hidden_gate_title" = "Este viaje está oculto";
+"hidden_gate_desc" = "Desbloquéalo con tu PIN para ver y editar este viaje.";
+"unlock_to_view" = "Desbloquear para ver";
+"hidden_concealed" = "Los viajes ocultos no son visibles";
+"hidden_revealed" = "Los viajes ocultos son visibles";
+"lock_again" = "Volver a bloquear";
+
+/* Actions */
+"actions_title" = "Acciones";
+"schedule_reminder" = "Programar recordatorio del viaje";
+"copy_trip_info" = "Copiar info del viaje";
+
+/* Share text */
+"share_title" = "Viaje:";
+"share_location" = "Lugar:";
+"share_date_range" = "Fechas:";
+"share_category" = "Categoría:";
+"share_notes" = "Notas:";
+"share_checklist" = "Lista de tareas:";
+"share_daily_notes" = "Notas diarias:";
+
+/* Common actions */
+"save" = "Guardar";
+"cancel" = "Cancelar";
+"reset" = "Restablecer";
+"add" = "Añadir";
+"ok" = "OK";
+"saved" = "Guardado";
+"trip_details" = "Detalles del viaje";
+
+/* Settings */
+"settings_title" = "Ajustes";
+"appearance" = "Apariencia";
+"theme_title" = "Tema";
+"theme_system" = "Del sistema";
+"theme_light" = "Claro";
+"theme_dark" = "Oscuro";
+
+"language_title" = "Idioma";
+"language_en" = "Inglés";
+"language_es" = "Español";
+
+"notifications_title" = "Notificaciones";
+"notifications_allow" = "Permitir notificaciones";
+"notifications_status" = "Estado";
+"notifications_enabled" = "Activadas";
+"notifications_disabled" = "Desactivadas";
+"notifications_unknown" = "Desconocido";
+
+"privacy_security" = "Privacidad y seguridad";
+"open_privacy_policy" = "Política de privacidad";
+"reset_all_data" = "Borrar todos los datos";
+"reset_confirm_title" = "¿Borrar todos los datos?";
+"reset_confirm_message" = "Esto eliminará todos los viajes y ajustes, incluido el PIN. No se puede deshacer.";
+
+/* Notifications copy */
+"notif_trip_upcoming_title" = "Viaje próximo";
+"notif_trip_upcoming_body" = "¡No lo olvides: %@ comienza pronto!";
+"notif_check_title" = "Recordatorio de la lista";
+"notif_check_body" = "\"%@\" de \"%@\" vence";
+
+/* App Lock */
+"app_lock_title" = "Bloqueo de la app";
+"app_lock_enable" = "Activar bloqueo con PIN";
+"app_lock_hint" = "Si está activado, se requiere un PIN de 4 dígitos al abrir o volver a la app.";
+"set_passcode" = "Definir / Cambiar PIN";
+"new_passcode" = "Nuevo PIN de 4 dígitos";
+"confirm_passcode" = "Confirmar PIN";
+"save_passcode" = "Guardar PIN";
+"remove_passcode" = "Eliminar PIN";
+
+"lock_screen_title" = "Introduce PIN";
+"enter_passcode" = "PIN";
+"passcode_wrong" = "PIN incorrecto";
+"unlock" = "Desbloquear";
+
+/* About */
+"about_title" = "Acerca de";
+"version" = "Versión";
+
+/* Stats */
+"stats_overview" = "Resumen";
+"stats_total_trips" = "Viajes totales";
+"stats_upcoming_trips" = "Próximos viajes";
+"stats_completed_trips" = "Viajes finalizados";
+"stats_checklist" = "Lista de tareas";
+"stats_items_total" = "Elementos totales";
+"stats_items_done" = "Completados";
+"stats_by_category" = "Por categoría";
+
+/* Countdown */
+"countdown_title" = "Cuenta atrás";
+"countdown_to_start" = "Comienza en %02d:%02d:%02d:%02d";
+"countdown_to_end"   = "Termina en %02d:%02d:%02d:%02d";
+"countdown_finished" = "Viaje finalizado";
+"countdown_hint_start" = "Cuenta atrás hasta la fecha de inicio.";
+"countdown_hint_end"   = "El viaje está en curso — cuenta hasta la fecha de fin.";
+"countdown_hint_past"  = "El viaje ha terminado.";
