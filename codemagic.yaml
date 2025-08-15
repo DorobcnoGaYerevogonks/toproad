@@ -1,0 +1,106 @@
+workflows:
+  ios_app_store:
+    name: TopRoad • App Store
+    max_build_duration: 60
+    environment:
+      xcode: 15.4
+      vars:
+        PROJECT_PATH: "TopRoad.xcodeproj"
+        SCHEME: "TopRoad"
+        BUNDLE_ID: "com.navattomat.toproad"
+        APPLE_ID: "6751043815"     # App Store numeric Apple ID (без "id")
+        EXPORT_METHOD: "app-store"
+      groups:
+        - "Mattie Navarro"         # Имя интеграции App Store Connect в Codemagic
+    triggering:
+      events:
+        - push
+        - pull_request
+      branch_patterns:
+        - pattern: "main"
+          include: true
+          source: true
+    cache:
+      cache_paths:
+        - "$HOME/Library/Caches/org.swift.swiftpm"
+        - "$HOME/Library/Developer/Xcode/DerivedData"
+    scripts:
+      - name: Show tools
+        script: |
+          xcodebuild -version
+          swift --version
+
+      - name: Ensure scheme is shared (info)
+        script: |
+          echo "Using scheme: $SCHEME"
+          echo "Project path: $PROJECT_PATH"
+          echo "Bundle ID: $BUNDLE_ID"
+          echo "Apple ID: $APPLE_ID"
+
+      - name: Increment build number
+        script: |
+          BUILD_NUMBER=${BUILD_NUMBER_OFFSET:-0}
+          BUILD_NUMBER=$((BUILD_NUMBER + $CM_BUILD_ID))
+          /usr/libexec/PlistBuddy -c "Set :CFBundleVersion $BUILD_NUMBER" "TopRoad/Info.plist" || true
+          echo "CFBundleVersion set to $BUILD_NUMBER"
+
+      - name: Resolve Swift Package Manager
+        script: |
+          xcodebuild -resolvePackageDependencies -project "$PROJECT_PATH" -scheme "$SCHEME"
+
+      - name: Archive (Release)
+        script: |
+          set -e
+          xcodebuild \
+            -project "$PROJECT_PATH" \
+            -scheme "$SCHEME" \
+            -configuration Release \
+            -destination "generic/platform=iOS" \
+            -archivePath "$CM_BUILD_DIR/TopRoad.xcarchive" \
+            clean archive \
+            CODE_SIGN_STYLE=Automatic
+
+      - name: Export .ipa
+        script: |
+          set -e
+          cat > $CM_BUILD_DIR/ExportOptions.plist << EOF
+          <?xml version="1.0" encoding="UTF-8"?>
+          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+          <plist version="1.0">
+          <dict>
+            <key>method</key><string>${EXPORT_METHOD}</string>
+            <key>signingStyle</key><string>automatic</string>
+            <key>destination</key><string>export</string>
+            <key>uploadSymbols</key><true/>
+            <key>uploadBitcode</key><false/>
+          </dict>
+          </plist>
+          EOF
+          xcodebuild -exportArchive \
+            -archivePath "$CM_BUILD_DIR/TopRoad.xcarchive" \
+            -exportOptionsPlist "$CM_BUILD_DIR/ExportOptions.plist" \
+            -exportPath "$CM_BUILD_DIR/export"
+
+      - name: List artifacts
+        script: |
+          ls -la "$CM_BUILD_DIR/export" || true
+
+    artifacts:
+      - "$CM_BUILD_DIR/export/*.ipa"
+      - "$CM_BUILD_DIR/TopRoad.xcarchive"
+      - "$CM_BUILD_DIR/ExportOptions.plist"
+      - "$HOME/Library/Logs/DiagnosticReports/*.crash"
+
+    publishing:
+      app_store_connect:
+        auth: integration           # использовать интеграцию из groups
+        submit_to_testflight: true  # отправка в TestFlight
+        submit_to_app_store: false   # автоматическая отправка на ревью (можешь поставить false, если пока не нужно)
+        # optional:
+        # release_type: SCHEDULED / MANUAL / AFTER_APPROVAL
+      email:
+        recipients:
+          - "you@example.com"
+        notify:
+          success: true
+          failure: true
