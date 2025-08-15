@@ -5,7 +5,8 @@ workflows:
     environment:
       xcode: 15.4
       vars:
-        PROJECT_PATH: "TopRoad.xcodeproj"
+            PROJECT_PATH: "TopRoad/TopRoad.xcodeproj"   # <-- исправь путь
+
         SCHEME: "TopRoad"
         BUNDLE_ID: "com.navattomat.toproad"
         APPLE_ID: "6751043815"     # App Store numeric Apple ID (без "id")
