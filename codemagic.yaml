@@ -45,21 +45,18 @@ workflows:
           /usr/libexec/PlistBuddy -c "Set :CFBundleVersion $BUILD_NUMBER" "TopRoad/Info.plist" || true
           echo "CFBundleVersion set to $BUILD_NUMBER"
 
-      - name: Resolve Swift Package Manager
-        script: |
-          xcodebuild -resolvePackageDependencies -project "$PROJECT_PATH" -scheme "$SCHEME"
+     - name: Resolve SPM
+  script: xcodebuild -resolvePackageDependencies -project "$PROJECT_PATH" -scheme "$SCHEME"
 
-      - name: Archive (Release)
-        script: |
-          set -e
-          xcodebuild \
-            -project "$PROJECT_PATH" \
-            -scheme "$SCHEME" \
-            -configuration Release \
-            -destination "generic/platform=iOS" \
-            -archivePath "$CM_BUILD_DIR/TopRoad.xcarchive" \
-            clean archive \
-            CODE_SIGN_STYLE=Automatic
+- name: Archive (Release)
+  script: |
+    xcodebuild \
+      -project "$PROJECT_PATH" \
+      -scheme "$SCHEME" \
+      -configuration Release \
+      -destination "generic/platform=iOS" \
+      -archivePath "$CM_BUILD_DIR/TopRoad.xcarchive" \
+      clean archive CODE_SIGN_STYLE=Automatic
 
       - name: Export .ipa
         script: |
