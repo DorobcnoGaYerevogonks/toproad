@@ -1,82 +1,78 @@
 workflows:
-  ios_app_store:
-    name: TopRoad • App Store
+  ios-appstore:
+    name: iOS → TestFlight + App Store
+    instance_type: mac_mini_m2
     max_build_duration: 120
 
+    # Интеграция с App Store Connect (из Team settings → Integrations)
     integrations:
       app_store_connect: "Mattie Navarro"
 
     environment:
-      xcode: 16.0
+      xcode: latest
+      ios_signing:
+        distribution_type: app_store
+        bundle_identifier: com.navattomat.toproad
       vars:
-        PROJECT_PATH: "TopRoad.xcodeproj"
-        SCHEME: "TopRoad"
-        BUNDLE_ID: "com.navattomat.toproad"
-        APPLE_ID: "6751043815"
-        EXPORT_METHOD: "app-store"
-        DEVELOPMENT_TEAM: "88LASY7459"   # ← 10-символьный Team ID (не имя!)
+        # Используем .xcodeproj (CocoaPods не задействованы):
+        XCODE_PROJECT: "TopRoad.xcodeproj"
+        # Если перейдёшь на CocoaPods, вместо PROJECT используй:
+        # XCODE_WORKSPACE: "TopRoad.xcworkspace"
+        XCODE_SCHEME: "TopRoad"
+        APP_STORE_APPLE_ID: 6751043815
+
+    cache:
+      cache_paths:
+        - $HOME/Library/Caches/org.swift.swiftpm
+        - $HOME/Library/Developer/Xcode/DerivedData/**/SourcePackages
+
+    triggering:
+      events: [ push ]
+      branch_patterns:
+        - pattern: "main"
+          include: true
+          source: true
+      cancel_previous_builds: true
 
     scripts:
-      - name: Tools info
+      - name: Resolve SwiftPM
         script: |
-          xcodebuild -version
-          swift --version
-          echo "Team: $DEVELOPMENT_TEAM"
+          xcodebuild -resolvePackageDependencies \
+            -project "$XCODE_PROJECT" \
+            -scheme "$XCODE_SCHEME"
+          # Если используешь workspace:
+          # xcodebuild -resolvePackageDependencies \
+          #   -workspace "$XCODE_WORKSPACE" \
+          #   -scheme "$XCODE_SCHEME"
+
+      - name: Set up code signing (automatic via App Store Connect)
+        script: |
+          xcode-project use-profiles
 
       - name: Increment build number
         script: |
-          BUILD_NUMBER=${BUILD_NUMBER_OFFSET:-0}
-          BUILD_NUMBER=$((BUILD_NUMBER + $CM_BUILD_ID))
-          /usr/libexec/PlistBuddy -c "Set :CFBundleVersion $BUILD_NUMBER" "TopRoad/Info.plist" || true
+          LATEST=$(app-store-connect get-latest-app-store-build-number "$APP_STORE_APPLE_ID" || echo 0)
+          agvtool new-version -all $((LATEST+1))
 
-      - name: Resolve Swift Package Manager
+      - name: Build IPA
         script: |
-          xcodebuild -resolvePackageDependencies -project "$PROJECT_PATH" -scheme "$SCHEME"
-
-      - name: Archive (Release)
-        script: |
-          set -e
-          xcodebuild \
-            -project "$PROJECT_PATH" \
-            -scheme "$SCHEME" \
-            -configuration Release \
-            -destination "generic/platform=iOS" \
-            -archivePath "$CM_BUILD_DIR/TopRoad.xcarchive" \
-            clean archive \
-            CODE_SIGN_STYLE=Automatic \
-            DEVELOPMENT_TEAM="$DEVELOPMENT_TEAM" \
-            PRODUCT_BUNDLE_IDENTIFIER="$BUNDLE_ID" \
-            -allowProvisioningUpdates
-
-      - name: Export .ipa
-        script: |
-          set -e
-          cat > $CM_BUILD_DIR/ExportOptions.plist << EOF
-          <?xml version="1.0" encoding="UTF-8"?>
-          <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
-          <plist version="1.0">
-          <dict>
-            <key>method</key><string>${EXPORT_METHOD}</string>
-            <key>signingStyle</key><string>automatic</string>
-            <key>destination</key><string>export</string>
-            <key>uploadSymbols</key><true/>
-            <key>uploadBitcode</key><false/>
-          </dict>
-          </plist>
-          EOF
-          xcodebuild -exportArchive \
-            -archivePath "$CM_BUILD_DIR/TopRoad.xcarchive" \
-            -exportOptionsPlist "$CM_BUILD_DIR/ExportOptions.plist" \
-            -exportPath "$CM_BUILD_DIR/export" \
-            -allowProvisioningUpdates
+          xcode-project build-ipa \
+            --project "$XCODE_PROJECT" \
+            --scheme "$XCODE_SCHEME"
+          # Если используешь workspace:
+          # xcode-project build-ipa \
+          #   --workspace "$XCODE_WORKSPACE" \
+          #   --scheme "$XCODE_SCHEME"
 
     artifacts:
-      - "$CM_BUILD_DIR/export/*.ipa"
-      - "$CM_BUILD_DIR/TopRoad.xcarchive"
-      - "$CM_BUILD_DIR/ExportOptions.plist"
+      - build/ios/ipa/*.ipa
+      - /tmp/xcodebuild_logs/*.log
+      - $HOME/Library/Developer/Xcode/DerivedData/**/Build/**/*.dSYM
 
     publishing:
       app_store_connect:
         auth: integration
         submit_to_testflight: true
+        # beta_groups: [ Internal ]    # при необходимости укажи группу
         submit_to_app_store: true
+        cancel_previous_submissions: true
