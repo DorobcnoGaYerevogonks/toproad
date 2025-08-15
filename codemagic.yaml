@@ -1,18 +1,17 @@
 workflows:
   ios_app_store:
     name: TopRoad • App Store
-    max_build_duration: 60
+    max_build_duration: 120
     environment:
       xcode: 15.4
       vars:
-            PROJECT_PATH: "TopRoad/TopRoad.xcodeproj"   # <-- исправь путь
-
+        PROJECT_PATH: "TopRoad/TopRoad.xcodeproj"   # <-- проверь путь!
         SCHEME: "TopRoad"
         BUNDLE_ID: "com.navattomat.toproad"
-        APPLE_ID: "6751043815"     # App Store numeric Apple ID (без "id")
+        APPLE_ID: "6751043815"
         EXPORT_METHOD: "app-store"
       groups:
-        - "Mattie Navarro"         # Имя интеграции App Store Connect в Codemagic
+        - "Mattie Navarro"
     triggering:
       events:
         - push
@@ -30,13 +29,8 @@ workflows:
         script: |
           xcodebuild -version
           swift --version
-
-      - name: Ensure scheme is shared (info)
-        script: |
-          echo "Using scheme: $SCHEME"
-          echo "Project path: $PROJECT_PATH"
-          echo "Bundle ID: $BUNDLE_ID"
-          echo "Apple ID: $APPLE_ID"
+          echo "Project: $PROJECT_PATH"
+          echo "Scheme : $SCHEME"
 
       - name: Increment build number
         script: |
@@ -45,18 +39,21 @@ workflows:
           /usr/libexec/PlistBuddy -c "Set :CFBundleVersion $BUILD_NUMBER" "TopRoad/Info.plist" || true
           echo "CFBundleVersion set to $BUILD_NUMBER"
 
-     - name: Resolve SPM
-  script: xcodebuild -resolvePackageDependencies -project "$PROJECT_PATH" -scheme "$SCHEME"
+      - name: Resolve Swift Package Manager
+        script: |
+          xcodebuild -resolvePackageDependencies -project "$PROJECT_PATH" -scheme "$SCHEME"
 
-- name: Archive (Release)
-  script: |
-    xcodebuild \
-      -project "$PROJECT_PATH" \
-      -scheme "$SCHEME" \
-      -configuration Release \
-      -destination "generic/platform=iOS" \
-      -archivePath "$CM_BUILD_DIR/TopRoad.xcarchive" \
-      clean archive CODE_SIGN_STYLE=Automatic
+      - name: Archive (Release)
+        script: |
+          set -e
+          xcodebuild \
+            -project "$PROJECT_PATH" \
+            -scheme "$SCHEME" \
+            -configuration Release \
+            -destination "generic/platform=iOS" \
+            -archivePath "$CM_BUILD_DIR/TopRoad.xcarchive" \
+            clean archive \
+            CODE_SIGN_STYLE=Automatic
 
       - name: Export .ipa
         script: |
@@ -80,22 +77,18 @@ workflows:
             -exportPath "$CM_BUILD_DIR/export"
 
       - name: List artifacts
-        script: |
-          ls -la "$CM_BUILD_DIR/export" || true
+        script: ls -la "$CM_BUILD_DIR/export" || true
 
     artifacts:
       - "$CM_BUILD_DIR/export/*.ipa"
       - "$CM_BUILD_DIR/TopRoad.xcarchive"
       - "$CM_BUILD_DIR/ExportOptions.plist"
-      - "$HOME/Library/Logs/DiagnosticReports/*.crash"
 
     publishing:
       app_store_connect:
-        auth: integration           # использовать интеграцию из groups
-        submit_to_testflight: true  # отправка в TestFlight
-        submit_to_app_store: false   # автоматическая отправка на ревью (можешь поставить false, если пока не нужно)
-        # optional:
-        # release_type: SCHEDULED / MANUAL / AFTER_APPROVAL
+        auth: integration
+        submit_to_testflight: true
+        submit_to_app_store: true
       email:
         recipients:
           - "you@example.com"
