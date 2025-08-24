@@ -16,20 +16,20 @@ struct SettingsView: View {
                     LanguagePickerView(selectedLanguage: $selectedLanguage)
                 }
 
-                Section(header: Text("notifications_title")) {
-                    HStack {
-                        Text("notifications_status")
-                        Spacer()
-                        Text(statusText).foregroundStyle(.secondary)
-                    }
-                    Button {
-                        NotificationService.shared.requestAuthorization { _ in
-                            refreshStatus()
-                        }
-                    } label: {
-                        Label(NSLocalizedString("notifications_allow", comment: ""), systemImage: "bell")
-                    }
-                }
+//                Section(header: Text("notifications_title")) {
+//                    HStack {
+//                        Text("notifications_status")
+//                        Spacer()
+//                        Text(statusText).foregroundStyle(.secondary)
+//                    }
+//                    Button {
+//                        NotificationService.shared.requestAuthorization { _ in
+//                            refreshStatus()
+//                        }
+//                    } label: {
+//                        Label(NSLocalizedString("notifications_allow", comment: ""), systemImage: "bell")
+//                    }
+//                }
 
                 Section(header: Text("privacy_security")) {
                     NavigationLink {
