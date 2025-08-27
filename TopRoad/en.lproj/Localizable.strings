@@ -144,3 +144,95 @@
 "countdown_hint_start" = "Counting down to the start date.";
 "countdown_hint_end"   = "Trip is in progress — countdown to the end date.";
 "countdown_hint_past"  = "Trip has ended.";
+
+
+"tab_templates" = "Templates";
+
+"tpl_cat_essentials" = "Essentials";
+"tpl_cat_vacation" = "Vacation";
+"tpl_cat_business" = "Business";
+"tpl_cat_hiking" = "Hiking";
+"tpl_cat_citybreak" = "City Break";
+"tpl_cat_custom" = "Custom";
+
+"tpl_use" = "Use";
+"tpl_duplicate" = "Duplicate";
+"tpl_delete" = "Delete";
+"tpl_create" = "New Template";
+"tpl_edit" = "Edit Template";
+"tpl_view" = "Template";
+"tpl_import" = "Import Templates";
+"tpl_export" = "Export Templates";
+"tpl_share_export" = "Share Export";
+"tpl_reset_defaults" = "Reset to Defaults";
+"tpl_reset_warn" = "This will remove all your custom templates and reload the default ones.";
+
+"tpl_title" = "Title";
+"tpl_category" = "Category";
+"tpl_emoji" = "Emoji";
+
+"checklist_title" = "Checklist";
+"checklist_empty" = "No items yet";
+"add_item_placeholder" = "Add item";
+"tpl_checklist_hint" = "Checklist items can be edited later in the trip.";
+
+"tpl_use_sheet_title" = "Create Trip";
+
+"tpl_empty_title" = "No templates";
+"tpl_empty_subtitle" = "Create or import templates to get started.";
+
+"tpl_copy_of" = "Copy of %@";
+"tpl_search_placeholder" = "Search templates";
+"all_categories" = "All";
+
+
+
+"tab_templates" = "Templates";
+
+"tpl_cat_essentials" = "Essentials";
+"tpl_cat_vacation"   = "Vacation";
+"tpl_cat_business"   = "Business";
+"tpl_cat_hiking"     = "Hiking";
+"tpl_cat_citybreak"  = "City Break";
+"tpl_cat_custom"     = "Custom";
+
+"tpl_use"            = "Use";
+"tpl_duplicate"      = "Duplicate";
+"tpl_delete"         = "Delete";
+"tpl_create"         = "New Template";
+"tpl_edit"           = "Edit Template";
+"tpl_view"           = "Template";
+"tpl_import"         = "Import Templates";
+"tpl_export"         = "Export Templates";
+"tpl_share_export"   = "Share Export";
+"tpl_reset_defaults" = "Reset to Defaults";
+"tpl_reset_warn"     = "This will remove all your custom templates and reload the default ones.";
+
+"tpl_title"          = "Title";
+"tpl_category"       = "Category";
+
+"checklist_title"        = "Checklist";
+"checklist_empty"        = "No items yet";
+"add_item_placeholder"   = "Add item";
+"tpl_checklist_hint"     = "Checklist items can be edited later in the trip.";
+
+"tpl_use_sheet_title" = "Create Trip";
+
+"tpl_empty_title"     = "No templates";
+"tpl_empty_subtitle"  = "Create or import templates to get started.";
+
+"tpl_copy_of"         = "Copy of %@";
+"tpl_search_placeholder" = "Search templates";
+"all_categories"      = "All";
+
+/* Common buttons/labels that this screen uses (add if not already present) */
+"save"   = "Save";
+"cancel" = "Cancel";
+"reset"  = "Reset";
+"create" = "Create";
+
+/* Reused field labels (if not already present in your app) */
+"field_title"     = "Title";
+"field_location"  = "Location";
+"field_category"  = "Category";
+"field_notes"     = "Notes";

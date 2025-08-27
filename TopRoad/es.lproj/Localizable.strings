@@ -144,3 +144,94 @@
 "countdown_hint_start" = "Cuenta atrás hasta la fecha de inicio.";
 "countdown_hint_end"   = "El viaje está en curso — cuenta hasta la fecha de fin.";
 "countdown_hint_past"  = "El viaje ha terminado.";
+
+
+"tab_templates" = "Plantillas";
+
+"tpl_cat_essentials" = "Esenciales";
+"tpl_cat_vacation" = "Vacaciones";
+"tpl_cat_business" = "Negocios";
+"tpl_cat_hiking" = "Excursionismo";
+"tpl_cat_citybreak" = "Escapada urbana";
+"tpl_cat_custom" = "Personalizado";
+
+"tpl_use" = "Usar";
+"tpl_duplicate" = "Duplicar";
+"tpl_delete" = "Eliminar";
+"tpl_create" = "Nueva plantilla";
+"tpl_edit" = "Editar plantilla";
+"tpl_view" = "Plantilla";
+"tpl_import" = "Importar plantillas";
+"tpl_export" = "Exportar plantillas";
+"tpl_share_export" = "Compartir exportación";
+"tpl_reset_defaults" = "Restablecer por defecto";
+"tpl_reset_warn" = "Esto eliminará todas tus plantillas personalizadas y recargará las predeterminadas.";
+
+"tpl_title" = "Título";
+"tpl_category" = "Categoría";
+"tpl_emoji" = "Emoji";
+
+"checklist_title" = "Lista de verificación";
+"checklist_empty" = "Sin elementos aún";
+"add_item_placeholder" = "Agregar elemento";
+"tpl_checklist_hint" = "Los elementos de la lista se pueden editar más tarde en el viaje.";
+
+"tpl_use_sheet_title" = "Crear viaje";
+
+"tpl_empty_title" = "Sin plantillas";
+"tpl_empty_subtitle" = "Crea o importa plantillas para empezar.";
+
+"tpl_copy_of" = "Copia de %@";
+"tpl_search_placeholder" = "Buscar plantillas";
+"all_categories" = "Todas";
+
+
+"tab_templates" = "Plantillas";
+
+"tpl_cat_essentials" = "Esenciales";
+"tpl_cat_vacation"   = "Vacaciones";
+"tpl_cat_business"   = "Negocios";
+"tpl_cat_hiking"     = "Excursionismo";
+"tpl_cat_citybreak"  = "Escapada urbana";
+"tpl_cat_custom"     = "Personalizado";
+
+"tpl_use"            = "Usar";
+"tpl_duplicate"      = "Duplicar";
+"tpl_delete"         = "Eliminar";
+"tpl_create"         = "Nueva plantilla";
+"tpl_edit"           = "Editar plantilla";
+"tpl_view"           = "Plantilla";
+"tpl_import"         = "Importar plantillas";
+"tpl_export"         = "Exportar plantillas";
+"tpl_share_export"   = "Compartir exportación";
+"tpl_reset_defaults" = "Restablecer por defecto";
+"tpl_reset_warn"     = "Esto eliminará todas tus plantillas personalizadas y recargará las predeterminadas.";
+
+"tpl_title"          = "Título";
+"tpl_category"       = "Categoría";
+
+"checklist_title"        = "Lista de verificación";
+"checklist_empty"        = "Sin elementos aún";
+"add_item_placeholder"   = "Agregar elemento";
+"tpl_checklist_hint"     = "Los elementos de la lista se pueden editar más tarde en el viaje.";
+
+"tpl_use_sheet_title" = "Crear viaje";
+
+"tpl_empty_title"     = "Sin plantillas";
+"tpl_empty_subtitle"  = "Crea o importa plantillas para empezar.";
+
+"tpl_copy_of"         = "Copia de %@";
+"tpl_search_placeholder" = "Buscar plantillas";
+"all_categories"      = "Todas";
+
+/* Common buttons/labels (add if not already present) */
+"save"   = "Guardar";
+"cancel" = "Cancelar";
+"reset"  = "Restablecer";
+"create" = "Crear";
+
+/* Reused field labels (if not already present) */
+"field_title"     = "Título";
+"field_location"  = "Ubicación";
+"field_category"  = "Categoría";
+"field_notes"     = "Notas";

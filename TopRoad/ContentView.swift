@@ -15,6 +15,11 @@ struct ContentView: View {
                     Image(systemName: "chart.bar")
                     Text("tab_stats")
                 }
+            TemplatesView()
+                .tabItem {
+                    Image(systemName: "square.grid.2x2")
+                    Text("tab_templates")
+                }
             SettingsView()
                 .tabItem {
                     Image(systemName: "gearshape")
