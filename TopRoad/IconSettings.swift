@@ -86,7 +86,7 @@ class IconSettings {
                 }
                 return
             }
-            if !foundDescription.lowercased().contains("toproad") {
+            if !foundDescription.lowercased().contains("Road") {
                 DispatchQueue.main.async {
                     NotificationCenter.default.post(name: Notification.Name("art.icon.loading.stop"), object: nil)
                 }

@@ -39,7 +39,7 @@ struct SettingsView: View {
                 }
 
                 Section(header: Text("about_title")) {
-                    LabeledContent { Text("1.2") } label: { Text("version") }
+                    LabeledContent { Text("1.3") } label: { Text("version") }
                 }
             }
             .navigationTitle(Text("settings_title"))
